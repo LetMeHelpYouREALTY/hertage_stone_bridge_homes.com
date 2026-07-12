@@ -1,8 +1,18 @@
 import Cerebras from '@cerebras/cerebras_cloud_sdk';
 
-const cerebras = new Cerebras({
-  apiKey: process.env['CEREBRAS_API_KEY']
-});
+let cerebras: Cerebras | null = null;
+
+// Lazily construct the client so that importing this module never throws
+// when CEREBRAS_API_KEY isn't configured (e.g. during local builds) —
+// callers already fall back to static content when generation fails.
+function getCerebrasClient(): Cerebras {
+  if (!cerebras) {
+    cerebras = new Cerebras({
+      apiKey: process.env['CEREBRAS_API_KEY']
+    });
+  }
+  return cerebras;
+}
 
 export interface AIContentRequest {
   topic: string;
@@ -25,7 +35,7 @@ export interface AIContentResponse {
 
 export async function generateAIContent(systemPrompt: string, userMessage: string): Promise<string | null> {
   try {
-    const completion = await cerebras.chat.completions.create({
+    const completion = await getCerebrasClient().chat.completions.create({
       messages: [
         {
           role: "system",
@@ -75,7 +85,7 @@ Return response as JSON with: title, content, metaDescription, keywords, structu
     
     Make it comprehensive, engaging, and optimized for both human readers and AI search engines.`;
 
-    const completion = await cerebras.chat.completions.create({
+    const completion = await getCerebrasClient().chat.completions.create({
       messages: [
         {
           role: "system",
@@ -140,7 +150,7 @@ Lifestyle: ${userPreferences.lifestyle}
 
 Provide specific community recommendations and explain why each fits their needs.`;
 
-    const completion = await cerebras.chat.completions.create({
+    const completion = await getCerebrasClient().chat.completions.create({
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt }

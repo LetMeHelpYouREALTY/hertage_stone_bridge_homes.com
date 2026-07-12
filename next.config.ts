@@ -1,28 +1,5 @@
 import type { NextConfig } from "next";
 
-const securityHeaders = [
-  {
-    key: "X-Content-Type-Options",
-    value: "nosniff",
-  },
-  {
-    key: "X-Frame-Options",
-    value: "DENY",
-  },
-  {
-    key: "X-XSS-Protection",
-    value: "1; mode=block",
-  },
-  {
-    key: "Referrer-Policy",
-    value: "strict-origin-when-cross-origin",
-  },
-  {
-    key: "Strict-Transport-Security",
-    value: "max-age=31536000; includeSubDomains",
-  },
-];
-
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
@@ -31,14 +8,9 @@ const nextConfig: NextConfig = {
     // (used throughout the real-estate components) instead of next/image.
     unoptimized: true,
   },
-  async headers() {
-    return [
-      {
-        source: "/(.*)",
-        headers: securityHeaders,
-      },
-    ];
-  },
+  // Security headers are configured in vercel.json (applies at the edge for
+  // the production deployment). Add a `headers()` function here too if this
+  // project is ever run behind a host other than Vercel.
 };
 
 export default nextConfig;
