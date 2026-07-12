@@ -1,32 +1,33 @@
-import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
+"use client";
+
+import { useEffect, useState } from "react";
 
 export interface FavoriteButtonProps {
-  isFavorited: { value: boolean };
+  isFavorited: boolean;
   mls: string;
-  onToggle$: () => void;
+  onToggle: () => void;
 }
 
-export const FavoriteButton = component$<FavoriteButtonProps>(({ isFavorited, mls, onToggle$ }) => {
-  const isAnimating = useSignal(false);
+export function FavoriteButton({ isFavorited, mls, onToggle }: FavoriteButtonProps) {
+  const [isAnimating, setIsAnimating] = useState(false);
 
   // Load favorites from localStorage on mount
-  useVisibleTask$(({ track }) => {
-    track(() => mls);
-
+  useEffect(() => {
     if (typeof window !== "undefined") {
       const favorites = JSON.parse(localStorage.getItem("favoriteProperties") || "[]");
-      isFavorited.value = favorites.includes(mls);
+      const shouldBeFavorited = favorites.includes(mls);
+      if (shouldBeFavorited !== isFavorited) {
+        onToggle();
+      }
     }
-  });
+  }, [mls]);
 
   // Save to localStorage when favorited state changes
-  useVisibleTask$(({ track }) => {
-    track(() => isFavorited.value);
-
+  useEffect(() => {
     if (typeof window !== "undefined") {
       const favorites = JSON.parse(localStorage.getItem("favoriteProperties") || "[]");
 
-      if (isFavorited.value) {
+      if (isFavorited) {
         if (!favorites.includes(mls)) {
           favorites.push(mls);
         }
@@ -39,39 +40,38 @@ export const FavoriteButton = component$<FavoriteButtonProps>(({ isFavorited, ml
 
       localStorage.setItem("favoriteProperties", JSON.stringify(favorites));
     }
-  });
+  }, [isFavorited]);
 
   const handleClick = () => {
-    isAnimating.value = true;
-    isFavorited.value = !isFavorited.value;
-    onToggle$();
+    setIsAnimating(true);
+    onToggle();
 
     // Reset animation after a short delay
     setTimeout(() => {
-      isAnimating.value = false;
+      setIsAnimating(false);
     }, 300);
   };
 
   return (
     <button
       type="button"
-      class={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 ${
-        isFavorited.value
+      className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 ${
+        isFavorited
           ? "bg-red-500 text-white shadow-lg"
           : "bg-white text-gray-600 shadow-md hover:shadow-lg"
-      } ${isAnimating.value ? "scale-125" : ""}`}
-      onClick$={handleClick}
-      aria-label={isFavorited.value ? "Remove from favorites" : "Add to favorites"}
-      title={isFavorited.value ? "Remove from favorites" : "Add to favorites"}
+      } ${isAnimating ? "scale-125" : ""}`}
+      onClick={handleClick}
+      aria-label={isFavorited ? "Remove from favorites" : "Add to favorites"}
+      title={isFavorited ? "Remove from favorites" : "Add to favorites"}
     >
       <svg
-        class={`w-5 h-5 transition-all duration-300 ${
-          isFavorited.value ? "fill-current" : "stroke-current fill-none"
+        className={`w-5 h-5 transition-all duration-300 ${
+          isFavorited ? "fill-current" : "stroke-current fill-none"
         }`}
         viewBox="0 0 24 24"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         aria-label="Heart"
       >
         <title>Heart</title>
@@ -79,4 +79,4 @@ export const FavoriteButton = component$<FavoriteButtonProps>(({ isFavorited, ml
       </svg>
     </button>
   );
-});
+}

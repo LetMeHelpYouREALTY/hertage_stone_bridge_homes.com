@@ -1,4 +1,6 @@
-import { component$, useVisibleTask$ } from "@builder.io/qwik";
+"use client";
+
+import { useEffect } from "react";
 import type { RealScoutContentBlock } from "../../types/real-estate-content";
 import { RealScoutAdvancedSearch } from "./RealScoutAdvancedSearch";
 import { RealScoutHomeValue } from "./RealScoutHomeValue";
@@ -9,10 +11,8 @@ export interface DynamicRealScoutBlockProps {
   block: RealScoutContentBlock;
 }
 
-export const DynamicRealScoutBlock = component$<DynamicRealScoutBlockProps>(({ block }) => {
-  useVisibleTask$(({ track }) => {
-    track(() => block.agentEncodedId);
-
+export function DynamicRealScoutBlock({ block }: DynamicRealScoutBlockProps) {
+  useEffect(() => {
     if (typeof window === "undefined") return;
 
     // Ensure RealScout script is loaded for all widget types
@@ -35,7 +35,7 @@ export const DynamicRealScoutBlock = component$<DynamicRealScoutBlockProps>(({ b
     };
 
     waitForRealScout();
-  });
+  }, [block.agentEncodedId]);
 
   const containerClasses = [
     "realscout-widget-container",
@@ -82,19 +82,19 @@ export const DynamicRealScoutBlock = component$<DynamicRealScoutBlockProps>(({ b
   };
 
   return (
-    <div class={containerClasses}>
+    <div className={containerClasses}>
       {/* Custom Header */}
-      <div class="mb-6">
-        <h3 class="text-2xl font-bold text-gray-900 mb-2">{block.title}</h3>
-        <p class="text-gray-600 mb-4">{block.description}</p>
+      <div className="mb-6">
+        <h3 className="text-2xl font-bold text-gray-900 mb-2">{block.title}</h3>
+        <p className="text-gray-600 mb-4">{block.description}</p>
 
         {/* Features List */}
         {block.content?.features && (
-          <ul class="flex flex-wrap gap-2 mb-4">
+          <ul className="flex flex-wrap gap-2 mb-4">
             {block.content.features.map((feature, index) => (
               <li
                 key={`feature-${index}-${feature.slice(0, 10)}`}
-                class="text-sm text-blue-600 bg-blue-50 px-3 py-1 rounded-full"
+                className="text-sm text-blue-600 bg-blue-50 px-3 py-1 rounded-full"
               >
                 {feature}
               </li>
@@ -104,11 +104,11 @@ export const DynamicRealScoutBlock = component$<DynamicRealScoutBlockProps>(({ b
 
         {/* Badges */}
         {block.content?.badges && (
-          <div class="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap gap-2 mb-4">
             {block.content.badges.map((badge, index) => (
               <span
                 key={`badge-${index}-${badge.slice(0, 10)}`}
-                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"
+                className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"
               >
                 {badge}
               </span>
@@ -122,10 +122,10 @@ export const DynamicRealScoutBlock = component$<DynamicRealScoutBlockProps>(({ b
 
       {/* Custom CTA */}
       {block.content?.ctaText && block.content?.ctaLink && (
-        <div class="mt-6 text-center">
+        <div className="mt-6 text-center">
           <a
             href={block.content.ctaLink}
-            class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
           >
             {block.content.ctaText}
           </a>
@@ -133,4 +133,4 @@ export const DynamicRealScoutBlock = component$<DynamicRealScoutBlockProps>(({ b
       )}
     </div>
   );
-});
+}
