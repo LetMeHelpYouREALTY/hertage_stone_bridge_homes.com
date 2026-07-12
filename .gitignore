@@ -1,18 +1,17 @@
+# Next.js
+/.next/
+/out/
+
 # Build
+/build
 /dist
-/lib
-/lib-types
-/server
 
 # Development
 node_modules
 *.local
 
-# Cache
-.cache
-.mf
-.rollup.cache
-tsconfig.tsbuildinfo
+# TypeScript
+*.tsbuildinfo
 
 # Logs
 logs
@@ -33,6 +32,9 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Env
+.env*.local
 
 # Yarn
 .yarn/*

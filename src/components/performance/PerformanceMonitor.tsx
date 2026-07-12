@@ -1,7 +1,9 @@
-import { component$, useVisibleTask$ } from "@builder.io/qwik";
+"use client";
 
-export const PerformanceMonitor = component$(() => {
-  useVisibleTask$(() => {
+import { useEffect } from "react";
+
+export function PerformanceMonitor() {
+  useEffect(() => {
     // Advanced Core Web Vitals monitoring for 2025
     if (typeof window !== "undefined" && "PerformanceObserver" in window) {
       // Monitor Largest Contentful Paint (LCP)
@@ -113,7 +115,7 @@ export const PerformanceMonitor = component$(() => {
         saveData: connection.saveData,
       });
     }
-  });
+  }, []);
 
   return null; // This component doesn't render anything visible
-});
+}

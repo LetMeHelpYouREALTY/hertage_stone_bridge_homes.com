@@ -1,7 +1,9 @@
-import { component$, useVisibleTask$ } from "@builder.io/qwik";
+"use client";
 
-export const AdvancedCaching = component$(() => {
-  useVisibleTask$(() => {
+import { useEffect } from "react";
+
+export function AdvancedCaching() {
+  useEffect(() => {
     // Advanced Service Worker for 2025 caching strategies
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
@@ -162,7 +164,7 @@ export const AdvancedCaching = component$(() => {
     };
 
     addResourceHints();
-  });
+  }, []);
 
   return null; // This component doesn't render anything visible
-});
+}
