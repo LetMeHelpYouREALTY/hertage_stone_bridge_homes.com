@@ -1,4 +1,3 @@
-import { component$ } from "@builder.io/qwik";
 import type { ListingProps } from "../../types/real-estate";
 
 export interface PropertyPriceProps {
@@ -7,7 +6,7 @@ export interface PropertyPriceProps {
   pricePerSqft?: number;
 }
 
-export const PropertyPrice = component$<PropertyPriceProps>(({ price, status, pricePerSqft }) => {
+export function PropertyPrice({ price, status, pricePerSqft }: PropertyPriceProps) {
   const formatPrice = (amount: number): string => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -53,16 +52,16 @@ export const PropertyPrice = component$<PropertyPriceProps>(({ price, status, pr
   };
 
   return (
-    <div class="flex flex-col space-y-2">
-      <div class="flex items-baseline justify-between">
-        <span class="text-2xl font-bold text-gray-900">{formatPrice(price)}</span>
-        <span class={`px-2 py-1 text-xs font-medium rounded-full border ${getStatusColor(status)}`}>
+    <div className="flex flex-col space-y-2">
+      <div className="flex items-baseline justify-between">
+        <span className="text-2xl font-bold text-gray-900">{formatPrice(price)}</span>
+        <span className={`px-2 py-1 text-xs font-medium rounded-full border ${getStatusColor(status)}`}>
           {getStatusText(status)}
         </span>
       </div>
       {pricePerSqft && (
-        <div class="text-sm text-gray-600">{formatPricePerSqft(pricePerSqft)}/sq ft</div>
+        <div className="text-sm text-gray-600">{formatPricePerSqft(pricePerSqft)}/sq ft</div>
       )}
     </div>
   );
-});
+}

@@ -1,4 +1,3 @@
-import { component$ } from "@builder.io/qwik";
 import type { RealScoutContentConfig } from "../../types/real-estate-content";
 import { DynamicRealScoutBlock } from "./DynamicRealScoutBlock";
 
@@ -6,7 +5,7 @@ export interface DynamicRealScoutGridProps {
   config: RealScoutContentConfig;
 }
 
-export const DynamicRealScoutGrid = component$<DynamicRealScoutGridProps>(({ config }) => {
+export function DynamicRealScoutGrid({ config }: DynamicRealScoutGridProps) {
   const containerClasses = [
     "max-w-7xl mx-auto px-4 py-12",
     config.layout?.background ? `bg-${config.layout.background}` : "",
@@ -39,9 +38,9 @@ export const DynamicRealScoutGrid = component$<DynamicRealScoutGridProps>(({ con
   );
 
   return (
-    <div class={containerClasses}>
+    <div className={containerClasses}>
       {Object.entries(groupedBlocks).map(([columns, blocks]) => (
-        <div key={`grid-${columns}`} class={`${getGridClasses(Number(columns))} mb-16`}>
+        <div key={`grid-${columns}`} className={`${getGridClasses(Number(columns))} mb-16`}>
           {blocks.map((block) => (
             <DynamicRealScoutBlock key={block.id} block={block} />
           ))}
@@ -49,4 +48,4 @@ export const DynamicRealScoutGrid = component$<DynamicRealScoutGridProps>(({ con
       ))}
     </div>
   );
-});
+}

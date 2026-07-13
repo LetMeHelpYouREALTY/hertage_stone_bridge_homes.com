@@ -1,7 +1,9 @@
-import { component$, useVisibleTask$ } from "@builder.io/qwik";
+"use client";
 
-export const AICrawlerDetection = component$(() => {
-  useVisibleTask$(() => {
+import { useEffect } from "react";
+
+export function AICrawlerDetection() {
+  useEffect(() => {
     // AI Crawler Detection and Enhanced Response
     function detectAICrawler() {
       const userAgent = navigator.userAgent.toLowerCase();
@@ -98,7 +100,7 @@ export const AICrawlerDetection = component$(() => {
       // Log AI crawler detection for analytics
       console.log("AI Crawler detected - Enhanced content delivered");
     }
-  });
+  }, []);
 
   return null; // This component doesn't render anything visible
-});
+}

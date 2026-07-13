@@ -1,111 +1,61 @@
-# Heritage at Stonebridge - Las Vegas 55+ Communities Website ⚡️
+# Heritage at Stonebridge - Las Vegas 55+ Communities Website
 
-**Last Deployment:** 2025-01-17T21:30:00Z
-
-- [Qwik Docs](https://qwik.builder.io/)
-- [Discord](https://qwik.builder.io/chat)
-- [Qwik GitHub](https://github.com/BuilderIO/qwik)
-- [@QwikDev](https://twitter.com/QwikDev)
-- [Vite](https://vitejs.dev/)
+Built with [Next.js](https://nextjs.org/) (App Router), React, TypeScript, and Tailwind CSS.
 
 ---
 
 ## Project Structure
 
-This project is using Qwik with [QwikCity](https://qwik.builder.io/qwikcity/overview/). QwikCity is just an extra set of tools on top of Qwik to make it easier to build a full site, including directory-based routing, layouts, and more.
-
-Inside your project, you'll see the following directory structure:
-
 ```
-├── public/
-│   └── ...
+├── public/                # Static assets (fonts, favicon, manifest, etc.)
 └── src/
-    ├── components/
-    │   └── ...
-    └── routes/
-        └── ...
+    ├── app/                # Next.js App Router routes, layouts, and route handlers
+    │   ├── layout.tsx      # Root layout (header, footer, global <head> tags)
+    │   ├── page.tsx        # Homepage
+    │   ├── globals.css     # Global styles (Tailwind + custom CSS)
+    │   ├── robots.txt/     # Dynamic robots.txt route handler
+    │   ├── sitemap*.xml/   # Dynamic XML sitemap route handlers
+    │   └── <slug>/page.tsx # One folder per route
+    ├── components/         # Reusable React components
+    │   ├── real-estate/    # Property/search/RealScout widget components
+    │   ├── luxury/         # Luxury-page specific components
+    │   ├── seo/            # SEO/structured-data helper components
+    │   ├── optimization/   # Image/caching optimization helpers
+    │   ├── performance/    # Performance monitoring helpers
+    │   ├── footer/
+    │   └── starter/header/
+    ├── config/             # Static content configuration
+    ├── lib/                # Server-side utilities (e.g. AI content generation)
+    ├── types/              # Shared TypeScript types (incl. RealScout custom-element JSX typings)
+    └── utils/              # Framework-agnostic helper functions
 ```
 
-- `src/routes`: Provides the directory based routing, which can include a hierarchy of `layout.tsx` layout files, and an `index.tsx` file as the page. Additionally, `index.ts` files are endpoints. Please see the [routing docs](https://qwik.builder.io/qwikcity/routing/overview/) for more info.
-
-- `src/components`: Recommended directory for components.
-
-- `public`: Any static assets, like images, can be placed in the public directory. Please see the [Vite public directory](https://vitejs.dev/guide/assets.html#the-public-directory) for more info.
-
-## Add Integrations and deployment
-
-Use the `pnpm qwik add` command to add additional integrations. Some examples of integrations include: Cloudflare, Netlify or Express server, and the [Static Site Generator (SSG)](https://qwik.builder.io/qwikcity/guides/static-site-generation/).
-
-```shell
-pnpm qwik add # or `yarn qwik add`
-```
+- `src/app`: File-based routing via the [Next.js App Router](https://nextjs.org/docs/app). Each folder under `src/app` maps to a URL segment, with `page.tsx` as the page component and `route.ts` for API/route handlers (e.g. `robots.txt`, `sitemap.xml`).
+- `src/components`: Shared React components, organized by feature area.
+- `public`: Static assets served as-is from the site root.
 
 ## Development
 
-Development mode uses [Vite's development server](https://vitejs.dev/). During development, the `dev` command will server-side render (SSR) the output.
-
 ```shell
-npm start # or `yarn start`
+pnpm install
+pnpm dev
 ```
 
-> Note: during dev mode, Vite may request a significant number of `.js` files. This does not represent a Qwik production build.
+This starts the Next.js dev server at [http://localhost:3000](http://localhost:3000).
 
-## Preview
-
-The preview command will create a production build of the client modules, a production build of `src/entry.preview.tsx`, and run a local server. The preview server is only for convenience to locally preview a production build, and it should not be used as a production server.
-
-```shell
-pnpm preview # or `yarn preview`
-```
-
-## Production
-
-The production build will generate client and server modules by running both client and server build commands. Additionally, the build command will use Typescript to run a type check on the source code.
-
-```shell
-pnpm build # or `yarn build`
-```
-
-## Vercel Edge
-
-This starter site is configured to deploy to [Vercel Edge Functions](https://vercel.com/docs/concepts/functions/edge-functions), which means it will be rendered at an edge location near to your users.
-
-## Installation
-
-The adaptor will add a new `vite.config.ts` within the `adapters/` directory, and a new entry file will be created, such as:
-
-```
-└── adapters/
-    └── vercel-edge/
-        └── vite.config.ts
-└── src/
-    └── entry.vercel-edge.tsx
-```
-
-Additionally, within the `package.json`, the `build.server` script will be updated with the Vercel Edge build.
-
-## Production build
-
-To build the application for production, use the `build` command, this command will automatically run `pnpm build.server` and `pnpm build.client`:
+## Production Build
 
 ```shell
 pnpm build
+pnpm start
 ```
 
-[Read the full guide here](https://github.com/BuilderIO/qwik/blob/main/starters/adapters/vercel-edge/README.md)
+`pnpm build` runs Next.js's production build (including type-checking and linting). `pnpm start` serves the compiled production build locally.
 
-## Dev deploy
+## Environment Variables
 
-To deploy the application for development:
+- `CEREBRAS_API_KEY` — optional. Powers the AI-generated content sections (luxury homes, community guides, market reports, etc. — see `src/lib/ai-content-generator.ts`). When unset, those pages fall back to static placeholder content instead of failing.
 
-```shell
-pnpm deploy
-```
+## Deployment
 
-Notice that you might need a [Vercel account](https://docs.Vercel.com/get-started/) in order to complete this step!
-
-## Production deploy
-
-The project is ready to be deployed to Vercel. However, you will need to create a git repository and push the code to it.
-
-You can [deploy your site to Vercel](https://vercel.com/docs/concepts/deployments/overview) either via a Git provider integration or through the Vercel CLI.
+This project deploys to [Vercel](https://vercel.com/) using its zero-config Next.js support. See `vercel.json` for custom security headers.

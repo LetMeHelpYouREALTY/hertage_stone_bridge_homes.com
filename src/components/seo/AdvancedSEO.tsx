@@ -1,7 +1,9 @@
-import { component$, useVisibleTask$ } from "@builder.io/qwik";
+"use client";
 
-export const AdvancedSEO = component$(() => {
-  useVisibleTask$(() => {
+import { useEffect } from "react";
+
+export function AdvancedSEO() {
+  useEffect(() => {
     // Advanced Schema.org markup injection for 2025
     const injectAdvancedSchema = () => {
       const schema = {
@@ -288,7 +290,7 @@ export const AdvancedSEO = component$(() => {
     };
 
     initAdvancedAnalytics();
-  });
+  }, []);
 
   return null; // This component doesn't render anything visible
-});
+}

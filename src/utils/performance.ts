@@ -184,7 +184,9 @@ export const createCache = <T>(maxSize: number = 100) => {
       } else if (cache.size >= maxSize) {
         // Remove least recently used
         const firstKey = cache.keys().next().value;
-        cache.delete(firstKey);
+        if (firstKey !== undefined) {
+          cache.delete(firstKey);
+        }
       }
       cache.set(key, value);
     },
@@ -202,8 +204,8 @@ export const createCache = <T>(maxSize: number = 100) => {
 // Bundle splitting helper
 export const loadComponent = async (componentName: string) => {
   try {
-    const module = await import(`../components/real-estate/${componentName}`);
-    return module;
+    const importedModule = await import(`../components/real-estate/${componentName}`);
+    return importedModule;
   } catch (error) {
     console.error(`Failed to load component: ${componentName}`, error);
     return null;

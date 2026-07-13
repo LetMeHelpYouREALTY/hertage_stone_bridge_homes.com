@@ -1,4 +1,6 @@
-import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
+"use client";
+
+import { useEffect, useState } from "react";
 
 interface Amenity {
   icon: string;
@@ -46,10 +48,12 @@ const amenities: Amenity[] = [
   },
 ];
 
-export const AnimatedAmenities = component$(() => {
-  const visibleItems = useSignal<boolean[]>(new Array(amenities.length).fill(false));
+export function AnimatedAmenities() {
+  const [visibleItems, setVisibleItems] = useState<boolean[]>(
+    new Array(amenities.length).fill(false)
+  );
 
-  useVisibleTask$(() => {
+  useEffect(() => {
     if (typeof window === "undefined") return;
 
     const observer = new IntersectionObserver(
@@ -58,7 +62,7 @@ export const AnimatedAmenities = component$(() => {
           if (entry.isIntersecting) {
             const index = parseInt(entry.target.getAttribute("data-index") || "0", 10);
             setTimeout(() => {
-              visibleItems.value = visibleItems.value.map((item, i) => (i === index ? true : item));
+              setVisibleItems((prev) => prev.map((item, i) => (i === index ? true : item)));
             }, index * 150); // Staggered animation
           }
         });
@@ -73,37 +77,37 @@ export const AnimatedAmenities = component$(() => {
     elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  });
+  }, []);
 
   return (
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       {amenities.map((amenity, index) => (
         <div
           key={index}
           data-amenity-item
           data-index={index}
-          class={`text-center p-6 transition-all duration-700 transform ${
-            visibleItems.value[index]
+          className={`text-center p-6 transition-all duration-700 transform ${
+            visibleItems[index]
               ? "opacity-100 translate-y-0 scale-100"
               : "opacity-0 translate-y-8 scale-95"
           }`}
         >
           <div
-            class={`w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br ${amenity.color} flex items-center justify-center shadow-lg transform transition-all duration-300 hover:scale-110 hover:rotate-6 group`}
+            className={`w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br ${amenity.color} flex items-center justify-center shadow-lg transform transition-all duration-300 hover:scale-110 hover:rotate-6 group`}
           >
-            <span class="text-3xl group-hover:scale-110 transition-transform duration-300">
+            <span className="text-3xl group-hover:scale-110 transition-transform duration-300">
               {amenity.icon}
             </span>
           </div>
-          <h4 class="text-xl font-semibold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
+          <h4 className="text-xl font-semibold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
             {amenity.title}
           </h4>
-          <p class="text-gray-600 leading-relaxed">{amenity.description}</p>
+          <p className="text-gray-600 leading-relaxed">{amenity.description}</p>
 
           {/* Subtle hover effect */}
-          <div class="mt-4 h-1 w-0 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto transition-all duration-500 group-hover:w-16 rounded-full" />
+          <div className="mt-4 h-1 w-0 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto transition-all duration-500 group-hover:w-16 rounded-full" />
         </div>
       ))}
     </div>
   );
-});
+}

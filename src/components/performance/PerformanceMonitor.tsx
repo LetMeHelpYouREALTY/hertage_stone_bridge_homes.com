@@ -1,7 +1,9 @@
-import { component$, useVisibleTask$ } from "@builder.io/qwik";
+"use client";
 
-export const PerformanceMonitor = component$(() => {
-  useVisibleTask$(() => {
+import { useEffect } from "react";
+
+export function PerformanceMonitor() {
+  useEffect(() => {
     // Advanced Core Web Vitals monitoring for 2025
     if (typeof window !== "undefined" && "PerformanceObserver" in window) {
       // Monitor Largest Contentful Paint (LCP)
@@ -19,7 +21,7 @@ export const PerformanceMonitor = component$(() => {
 
       try {
         lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] });
-      } catch (e) {
+      } catch {
         console.warn("LCP monitoring not supported");
       }
 
@@ -35,7 +37,7 @@ export const PerformanceMonitor = component$(() => {
 
       try {
         fidObserver.observe({ entryTypes: ["first-input"] });
-      } catch (e) {
+      } catch {
         console.warn("FID monitoring not supported");
       }
 
@@ -56,7 +58,7 @@ export const PerformanceMonitor = component$(() => {
 
       try {
         clsObserver.observe({ entryTypes: ["layout-shift"] });
-      } catch (e) {
+      } catch {
         console.warn("CLS monitoring not supported");
       }
 
@@ -88,7 +90,7 @@ export const PerformanceMonitor = component$(() => {
 
       try {
         resourceObserver.observe({ entryTypes: ["resource"] });
-      } catch (e) {
+      } catch {
         console.warn("Resource monitoring not supported");
       }
     }
@@ -113,7 +115,7 @@ export const PerformanceMonitor = component$(() => {
         saveData: connection.saveData,
       });
     }
-  });
+  }, []);
 
   return null; // This component doesn't render anything visible
-});
+}

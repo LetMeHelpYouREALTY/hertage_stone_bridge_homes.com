@@ -1,6 +1,5 @@
 # Ignore build artifacts that might cause conflicts
-dist/
-.qwik/
+.next/
 node_modules/.cache/
 tmp/
 *.log

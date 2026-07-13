@@ -1,4 +1,6 @@
-import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 
 interface HeroImage {
   src: string;
@@ -40,92 +42,96 @@ const luxuryImages: HeroImage[] = [
   },
 ];
 
-export const HeroImageCarousel = component$(() => {
-  const isClient = useSignal(false);
-  const currentIndex = useSignal(0);
-  const isTransitioning = useSignal(false);
+export function HeroImageCarousel() {
+  const [isClient, setIsClient] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const isTransitioningRef = useRef(isTransitioning);
 
-  useVisibleTask$(() => {
+  useEffect(() => {
+    isTransitioningRef.current = isTransitioning;
+  }, [isTransitioning]);
+
+  useEffect(() => {
     if (typeof window === "undefined") return;
 
-    isClient.value = true;
+    setIsClient(true);
 
     // Auto-advance carousel every 5 seconds
     const interval = setInterval(() => {
-      if (!isTransitioning.value) {
-        currentIndex.value = (currentIndex.value + 1) % luxuryImages.length;
+      if (!isTransitioningRef.current) {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % luxuryImages.length);
       }
     }, 5000);
 
     return () => clearInterval(interval);
-  });
+  }, []);
 
   const goToSlide = (index: number) => {
-    if (isTransitioning.value) return;
-    isTransitioning.value = true;
-    currentIndex.value = index;
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentIndex(index);
     if (typeof window !== "undefined") {
       setTimeout(() => {
-        isTransitioning.value = false;
+        setIsTransitioning(false);
       }, 300);
     }
   };
 
   const nextSlide = () => {
-    if (isTransitioning.value) return;
-    isTransitioning.value = true;
-    currentIndex.value = (currentIndex.value + 1) % luxuryImages.length;
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentIndex((currentIndex + 1) % luxuryImages.length);
     if (typeof window !== "undefined") {
       setTimeout(() => {
-        isTransitioning.value = false;
+        setIsTransitioning(false);
       }, 300);
     }
   };
 
   const prevSlide = () => {
-    if (isTransitioning.value) return;
-    isTransitioning.value = true;
-    currentIndex.value =
-      currentIndex.value === 0 ? luxuryImages.length - 1 : currentIndex.value - 1;
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentIndex(currentIndex === 0 ? luxuryImages.length - 1 : currentIndex - 1);
     if (typeof window !== "undefined") {
       setTimeout(() => {
-        isTransitioning.value = false;
+        setIsTransitioning(false);
       }, 300);
     }
   };
 
   // Only render on client side to avoid SSR issues with setTimeout in functions
-  if (!isClient.value) {
+  if (!isClient) {
     return (
-      <div class="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden rounded-xl shadow-2xl bg-gray-200 flex items-center justify-center">
-        <div class="text-center text-gray-600">
-          <div class="text-xl font-semibold mb-2">Loading Luxury Images...</div>
-          <div class="text-sm">Heritage at Stonebridge</div>
+      <div className="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden rounded-xl shadow-2xl bg-gray-200 flex items-center justify-center">
+        <div className="text-center text-gray-600">
+          <div className="text-xl font-semibold mb-2">Loading Luxury Images...</div>
+          <div className="text-sm">Heritage at Stonebridge</div>
         </div>
       </div>
     );
   }
 
   return (
-    <div class="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden rounded-xl shadow-2xl">
+    <div className="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden rounded-xl shadow-2xl">
       {/* Main Image */}
-      <div class="relative h-full">
+      <div className="relative h-full">
         <img
-          src={luxuryImages[currentIndex.value].src}
-          alt={luxuryImages[currentIndex.value].alt}
-          class="w-full h-full object-cover transition-all duration-500 ease-in-out"
+          src={luxuryImages[currentIndex].src}
+          alt={luxuryImages[currentIndex].alt}
+          className="w-full h-full object-cover transition-all duration-500 ease-in-out"
         />
 
         {/* Gradient Overlay */}
-        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
         {/* Content Overlay */}
-        <div class="absolute bottom-8 left-8 text-white">
-          <h3 class="text-2xl md:text-3xl font-bold mb-2">
-            {luxuryImages[currentIndex.value].title}
+        <div className="absolute bottom-8 left-8 text-white">
+          <h3 className="text-2xl md:text-3xl font-bold mb-2">
+            {luxuryImages[currentIndex].title}
           </h3>
-          <p class="text-lg md:text-xl text-blue-100">
-            {luxuryImages[currentIndex.value].description}
+          <p className="text-lg md:text-xl text-blue-100">
+            {luxuryImages[currentIndex].description}
           </p>
         </div>
       </div>
@@ -133,20 +139,20 @@ export const HeroImageCarousel = component$(() => {
       {/* Navigation Arrows */}
       <button
         type="button"
-        onClick$={prevSlide}
-        class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/30 transition-all duration-200 group"
+        onClick={prevSlide}
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/30 transition-all duration-200 group"
         aria-label="Previous image"
       >
         <svg
-          class="w-6 h-6 group-hover:scale-110 transition-transform"
+          className="w-6 h-6 group-hover:scale-110 transition-transform"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
           <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
             d="M15 19l-7-7 7-7"
           />
         </svg>
@@ -154,29 +160,29 @@ export const HeroImageCarousel = component$(() => {
 
       <button
         type="button"
-        onClick$={nextSlide}
-        class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/30 transition-all duration-200 group"
+        onClick={nextSlide}
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/30 transition-all duration-200 group"
         aria-label="Next image"
       >
         <svg
-          class="w-6 h-6 group-hover:scale-110 transition-transform"
+          className="w-6 h-6 group-hover:scale-110 transition-transform"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
         </svg>
       </button>
 
       {/* Dots Indicator */}
-      <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
         {luxuryImages.map((_, index) => (
           <button
             key={`dot-${index}`}
             type="button"
-            onClick$={() => goToSlide(index)}
-            class={`w-3 h-3 rounded-full transition-all duration-200 ${
-              index === currentIndex.value ? "bg-white scale-125" : "bg-white/50 hover:bg-white/75"
+            onClick={() => goToSlide(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-200 ${
+              index === currentIndex ? "bg-white scale-125" : "bg-white/50 hover:bg-white/75"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
@@ -184,25 +190,25 @@ export const HeroImageCarousel = component$(() => {
       </div>
 
       {/* Thumbnail Strip */}
-      <div class="absolute bottom-0 left-0 right-0 bg-black/30 backdrop-blur-sm p-4">
-        <div class="flex space-x-2 overflow-x-auto scrollbar-hide">
+      <div className="absolute bottom-0 left-0 right-0 bg-black/30 backdrop-blur-sm p-4">
+        <div className="flex space-x-2 overflow-x-auto scrollbar-hide">
           {luxuryImages.map((image, index) => (
             <button
               key={`thumb-${index}`}
               type="button"
-              onClick$={() => goToSlide(index)}
-              class={`flex-shrink-0 w-16 h-12 rounded-lg overflow-hidden transition-all duration-200 ${
-                index === currentIndex.value
+              onClick={() => goToSlide(index)}
+              className={`flex-shrink-0 w-16 h-12 rounded-lg overflow-hidden transition-all duration-200 ${
+                index === currentIndex
                   ? "ring-2 ring-white scale-105"
                   : "opacity-70 hover:opacity-100 hover:scale-105"
               }`}
               aria-label={`View ${image.title}`}
             >
-              <img src={image.src} alt={image.alt} class="w-full h-full object-cover" />
+              <img src={image.src} alt={image.alt} className="w-full h-full object-cover" />
             </button>
           ))}
         </div>
       </div>
     </div>
   );
-});
+}

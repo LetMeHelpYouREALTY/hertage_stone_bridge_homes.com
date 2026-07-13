@@ -1,4 +1,6 @@
-import { component$, useSignal, useTask$ } from "@builder.io/qwik";
+"use client";
+
+import { useEffect, useState } from "react";
 import type { PropertySearchResult, SearchFilters as SearchFiltersType } from "../../types/real-estate";
 import { PropertyGrid } from "./PropertyGrid";
 import { SearchFilters as SearchFiltersComponent } from "./SearchFilters";
@@ -9,8 +11,8 @@ export interface SearchInterfaceProps {
   onSearch?: (filters: SearchFiltersType) => void;
 }
 
-export const SearchInterface = component$<SearchInterfaceProps>(({ initialFilters, onSearch }) => {
-  const filters = useSignal<SearchFiltersType>({
+export function SearchInterface({ initialFilters, onSearch }: SearchInterfaceProps) {
+  const [filters, setFilters] = useState<SearchFiltersType>({
     priceMin: initialFilters?.priceMin || 0,
     priceMax: initialFilters?.priceMax || 2000000,
     beds: initialFilters?.beds || 0,
@@ -20,31 +22,19 @@ export const SearchInterface = component$<SearchInterfaceProps>(({ initialFilter
     status: initialFilters?.status || "for-sale",
   });
 
-  const sortBy = useSignal<"price" | "beds" | "sqft" | "newest">("newest");
-  const sortOrder = useSignal<"asc" | "desc">("desc");
-  const searchResults = useSignal<PropertySearchResult>({
+  const [sortBy, setSortBy] = useState<"price" | "beds" | "sqft" | "newest">("newest");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [searchResults, setSearchResults] = useState<PropertySearchResult>({
     listings: [],
     total: 0,
     page: 1,
     hasMore: false,
   });
-  const isLoading = useSignal(false);
-  const searchQuery = useSignal("");
-
-  // Debounced search effect
-  useTask$(({ track }) => {
-    track(() => filters.value);
-    track(() => searchQuery.value);
-
-    const timeoutId = setTimeout(() => {
-      performSearch();
-    }, 500);
-
-    return () => clearTimeout(timeoutId);
-  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const performSearch = async () => {
-    isLoading.value = true;
+    setIsLoading(true);
 
     try {
       // Simulate API call - replace with actual implementation
@@ -79,38 +69,51 @@ export const SearchInterface = component$<SearchInterfaceProps>(({ initialFilter
         hasMore: false,
       };
 
-      searchResults.value = mockResults;
-      onSearch?.(filters.value);
+      setSearchResults(mockResults);
+      onSearch?.(filters);
     } catch (error) {
       console.error("Search error:", error);
-      searchResults.value = {
+      setSearchResults({
         listings: [],
         total: 0,
         page: 1,
         hasMore: false,
-      };
+      });
     } finally {
-      isLoading.value = false;
+      setIsLoading(false);
     }
   };
 
-  const handleLoadMore = async () => {
-    if (!searchResults.value.hasMore || isLoading.value) return;
+  // Debounced search effect. `performSearch` is intentionally omitted from
+  // the dependency array — it's recreated on every render, and including it
+  // would re-trigger the debounce timer on every render instead of only
+  // when `filters`/`searchQuery` actually change.
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      performSearch();
+    }, 500);
 
-    isLoading.value = true;
+    return () => clearTimeout(timeoutId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters, searchQuery]);
+
+  const handleLoadMore = async () => {
+    if (!searchResults.hasMore || isLoading) return;
+
+    setIsLoading(true);
 
     try {
       // Simulate loading more results
-      const nextPage = searchResults.value.page + 1;
+      const nextPage = searchResults.page + 1;
       // In real implementation, fetch next page from API
 
-      searchResults.value = {
-        ...searchResults.value,
+      setSearchResults({
+        ...searchResults,
         page: nextPage,
         hasMore: false, // Simulate no more results
-      };
+      });
     } finally {
-      isLoading.value = false;
+      setIsLoading(false);
     }
   };
 
@@ -118,68 +121,68 @@ export const SearchInterface = component$<SearchInterfaceProps>(({ initialFilter
     newSortBy: "price" | "beds" | "sqft" | "newest",
     newSortOrder: "asc" | "desc"
   ) => {
-    sortBy.value = newSortBy;
-    sortOrder.value = newSortOrder;
+    setSortBy(newSortBy);
+    setSortOrder(newSortOrder);
     performSearch();
   };
 
   return (
-    <div class="max-w-7xl mx-auto px-4 py-8">
-      <div class="mb-8">
-        <h2 class="text-3xl font-bold text-gray-900 mb-4">Find Your Dream Home</h2>
-        <div class="flex flex-col sm:flex-row gap-4">
-          <div class="flex-1">
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="mb-8">
+        <h2 className="text-3xl font-bold text-gray-900 mb-4">Find Your Dream Home</h2>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex-1">
             <input
               type="text"
               placeholder="Search by address, neighborhood, or ZIP code..."
-              value={searchQuery.value}
-              onInput$={(e) => {
-                searchQuery.value = (e.target as HTMLInputElement).value;
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery((e.target as HTMLInputElement).value);
               }}
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
           <button
             type="button"
-            class="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
-            onClick$={performSearch}
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            onClick={performSearch}
           >
             Search
           </button>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Filters Sidebar */}
-        <div class="lg:col-span-1">
+        <div className="lg:col-span-1">
           <SearchFiltersComponent
             filters={filters}
-            onFiltersChange$={(newFilters: SearchFiltersType) => {
-              filters.value = newFilters;
+            onFiltersChange={(newFilters: SearchFiltersType) => {
+              setFilters(newFilters);
             }}
           />
         </div>
 
         {/* Results Section */}
-        <div class="lg:col-span-3">
-          <div class="flex justify-between items-center mb-6">
-            <div class="text-sm text-gray-600">
-              {searchResults.value.total > 0 && `${searchResults.value.total} properties found`}
+        <div className="lg:col-span-3">
+          <div className="flex justify-between items-center mb-6">
+            <div className="text-sm text-gray-600">
+              {searchResults.total > 0 && `${searchResults.total} properties found`}
             </div>
             <SortOptions
-              sortBy={sortBy.value}
-              sortOrder={sortOrder.value}
-              onSortChange$={handleSortChange}
+              sortBy={sortBy}
+              sortOrder={sortOrder}
+              onSortChange={handleSortChange}
             />
           </div>
 
           <PropertyGrid
-            searchResult={searchResults.value}
+            searchResult={searchResults}
             onLoadMore={handleLoadMore}
-            isLoading={isLoading.value}
+            isLoading={isLoading}
           />
         </div>
       </div>
     </div>
   );
-});
+}
