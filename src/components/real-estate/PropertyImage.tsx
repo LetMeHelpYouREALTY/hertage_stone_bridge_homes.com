@@ -14,6 +14,8 @@ export function PropertyImage({ src, alt, onLoad, priority = false }: PropertyIm
   const [hasError, setHasError] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
 
+  // Sets up lazy-loading (or eager-loads) the image once on mount for this
+  // element; `src`/`priority` aren't expected to change for a given card.
   useEffect(() => {
     const img = imageRef.current;
     if (!img) return;
@@ -45,6 +47,7 @@ export function PropertyImage({ src, alt, onLoad, priority = false }: PropertyIm
     return () => {
       // Cleanup function for all code paths
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleLoad = () => {

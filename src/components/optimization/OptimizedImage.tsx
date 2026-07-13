@@ -56,7 +56,7 @@ export function OptimizedImage({
     return () => {
       // Cleanup function for all code paths
     };
-  }, []);
+  }, [priority]);
 
   // Generate optimized image URLs for different devices
   const generateSrcSet = (baseSrc: string) => {

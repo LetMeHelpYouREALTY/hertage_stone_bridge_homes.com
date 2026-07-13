@@ -15,9 +15,10 @@ export interface PropertyCardProps {
 export function PropertyCard({ listing, showContactForm = false }: PropertyCardProps) {
   const [isFavorited, setIsFavorited] = useState(false);
   const [contactFormVisible, setContactFormVisible] = useState(showContactForm);
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [, setImageLoaded] = useState(false);
 
-  // Track property views for analytics
+  // Track property views for analytics. Intentionally fires once per mount
+  // (per listing card), not on every re-render.
   useEffect(() => {
     // Analytics tracking
     if (window?.gtag) {
@@ -27,6 +28,7 @@ export function PropertyCard({ listing, showContactForm = false }: PropertyCardP
         property_location: `${listing.address.city}, ${listing.address.state}`,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

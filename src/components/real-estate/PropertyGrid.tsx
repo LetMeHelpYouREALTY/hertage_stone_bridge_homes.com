@@ -12,7 +12,7 @@ export interface PropertyGridProps {
 
 export function PropertyGrid({ searchResult, onLoadMore, isLoading = false }: PropertyGridProps) {
   const gridRef = useRef<HTMLDivElement>(null);
-  const [isIntersecting, setIsIntersecting] = useState(false);
+  const [, setIsIntersecting] = useState(false);
 
   // Intersection Observer for infinite scroll
   useEffect(() => {
@@ -38,7 +38,7 @@ export function PropertyGrid({ searchResult, onLoadMore, isLoading = false }: Pr
     return () => {
       observer.disconnect();
     };
-  }, [gridRef.current]);
+  }, [isLoading, onLoadMore]);
 
   if (searchResult.listings.length === 0 && !isLoading) {
     return (

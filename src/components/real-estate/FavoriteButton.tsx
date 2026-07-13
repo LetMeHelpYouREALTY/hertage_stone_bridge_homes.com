@@ -11,7 +11,10 @@ export interface FavoriteButtonProps {
 export function FavoriteButton({ isFavorited, mls, onToggle }: FavoriteButtonProps) {
   const [isAnimating, setIsAnimating] = useState(false);
 
-  // Load favorites from localStorage on mount
+  // Load favorites from localStorage on mount. Intentionally only re-syncs
+  // when `mls` changes (not on every `isFavorited`/`onToggle` change) so this
+  // stays a one-time reconciliation rather than fighting subsequent user
+  // toggles.
   useEffect(() => {
     if (typeof window !== "undefined") {
       const favorites = JSON.parse(localStorage.getItem("favoriteProperties") || "[]");
@@ -20,9 +23,10 @@ export function FavoriteButton({ isFavorited, mls, onToggle }: FavoriteButtonPro
         onToggle();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mls]);
 
-  // Save to localStorage when favorited state changes
+  // Save to localStorage when favorited state changes.
   useEffect(() => {
     if (typeof window !== "undefined") {
       const favorites = JSON.parse(localStorage.getItem("favoriteProperties") || "[]");
@@ -40,6 +44,7 @@ export function FavoriteButton({ isFavorited, mls, onToggle }: FavoriteButtonPro
 
       localStorage.setItem("favoriteProperties", JSON.stringify(favorites));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFavorited]);
 
   const handleClick = () => {

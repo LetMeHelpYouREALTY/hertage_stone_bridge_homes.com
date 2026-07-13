@@ -84,13 +84,17 @@ export function SearchInterface({ initialFilters, onSearch }: SearchInterfacePro
     }
   };
 
-  // Debounced search effect
+  // Debounced search effect. `performSearch` is intentionally omitted from
+  // the dependency array — it's recreated on every render, and including it
+  // would re-trigger the debounce timer on every render instead of only
+  // when `filters`/`searchQuery` actually change.
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       performSearch();
     }, 500);
 
     return () => clearTimeout(timeoutId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, searchQuery]);
 
   const handleLoadMore = async () => {

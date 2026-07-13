@@ -21,7 +21,7 @@ export function PerformanceMonitor() {
 
       try {
         lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] });
-      } catch (e) {
+      } catch {
         console.warn("LCP monitoring not supported");
       }
 
@@ -37,7 +37,7 @@ export function PerformanceMonitor() {
 
       try {
         fidObserver.observe({ entryTypes: ["first-input"] });
-      } catch (e) {
+      } catch {
         console.warn("FID monitoring not supported");
       }
 
@@ -58,7 +58,7 @@ export function PerformanceMonitor() {
 
       try {
         clsObserver.observe({ entryTypes: ["layout-shift"] });
-      } catch (e) {
+      } catch {
         console.warn("CLS monitoring not supported");
       }
 
@@ -90,7 +90,7 @@ export function PerformanceMonitor() {
 
       try {
         resourceObserver.observe({ entryTypes: ["resource"] });
-      } catch (e) {
+      } catch {
         console.warn("Resource monitoring not supported");
       }
     }
