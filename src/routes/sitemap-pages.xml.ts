@@ -28,6 +28,20 @@ export const onGet: RequestHandler = async (requestEvent) => {
     </url>
     
     <url>
+        <loc>https://heritagestonebridge.com/about/</loc>
+        <lastmod>${currentDate}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://heritagestonebridge.com/contact/</loc>
+        <lastmod>${currentDate}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
         <loc>https://heritagestonebridge.com/55-plus-communities/</loc>
         <lastmod>${currentDate}</lastmod>
         <changefreq>monthly</changefreq>

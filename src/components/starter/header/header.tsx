@@ -1,4 +1,6 @@
 import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
+import { NapBar } from "~/components/nap/NapBar";
+import { business } from "~/config/business";
 import styles from "./header.module.css";
 
 export default component$(() => {
@@ -23,18 +25,21 @@ export default component$(() => {
           : "relative bg-white"
       } transition-all duration-300`}
     >
+      <NapBar />
       <div class={["container", styles.wrapper]}>
         {/* Clean Brand Logo */}
         <div class={styles.logo}>
-          <a href="/" title="Heritage at Stonebridge">
+          <a href="/" title={business.name}>
             <div class="flex items-center space-x-2">
               <div class="bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg p-2">
                 <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                 </svg>
               </div>
-              <div class="text-left">
-                <div class="text-lg font-bold text-gray-900">Heritage at Stonebridge</div>
+              <div class="text-left max-w-[11rem] sm:max-w-xs lg:max-w-sm">
+                <div class="text-sm sm:text-base font-bold text-gray-900 leading-tight">
+                  {business.name}
+                </div>
               </div>
             </div>
           </a>
@@ -77,13 +82,13 @@ export default component$(() => {
           {/* CTA Buttons */}
           <div class="flex items-center space-x-3">
             <a
-              href="tel:702-789-6561"
+              href={business.telephoneHref}
               class="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors"
             >
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
               </svg>
-              <span>(702) 789-6561</span>
+              <span>{business.telephoneDisplay}</span>
             </a>
             
             <a

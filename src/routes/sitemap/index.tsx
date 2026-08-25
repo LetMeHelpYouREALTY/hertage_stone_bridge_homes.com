@@ -1,5 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
+import { NapBlock } from "~/components/nap/NapBlock";
 
 export const head: DocumentHead = {
   title: "Sitemap - Heritage at Stonebridge",
@@ -19,8 +20,9 @@ export default component$(() => {
   return (
     <div class="max-w-4xl mx-auto px-4 py-16">
       <h1 class="text-4xl font-bold text-gray-900 mb-8">Sitemap</h1>
+      <NapBlock />
       
-      <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8 mt-8">
         <h2 class="text-xl font-semibold text-blue-900 mb-2">XML Sitemaps</h2>
         <p class="text-blue-800 mb-4">For search engines and SEO tools:</p>
         <ul class="space-y-2">
@@ -52,6 +54,8 @@ export default component$(() => {
           <h2 class="text-2xl font-bold text-gray-900 mb-4">Core Pages</h2>
           <ul class="space-y-2">
             <li><a href="/" class="text-blue-600 hover:text-blue-800">Homepage</a></li>
+            <li><a href="/about/" class="text-blue-600 hover:text-blue-800">About</a></li>
+            <li><a href="/contact/" class="text-blue-600 hover:text-blue-800">Contact</a></li>
             <li><a href="/real-estate/" class="text-blue-600 hover:text-blue-800">Real Estate</a></li>
             <li><a href="/55-plus-communities/" class="text-blue-600 hover:text-blue-800">55+ Communities</a></li>
             <li><a href="/homes-for-sale-stonebridge-summerlin/" class="text-blue-600 hover:text-blue-800">Stonebridge Homes</a></li>
@@ -95,6 +99,8 @@ export default component$(() => {
             <li><a href="/home-selling-guide/" class="text-blue-600 hover:text-blue-800">Home Selling Guide</a></li>
             <li><a href="/first-time-buyers/" class="text-blue-600 hover:text-blue-800">First Time Buyers</a></li>
             <li><a href="/testimonials/" class="text-blue-600 hover:text-blue-800">Testimonials</a></li>
+            <li><a href="/privacy-policy/" class="text-blue-600 hover:text-blue-800">Privacy Policy</a></li>
+            <li><a href="/terms-of-service/" class="text-blue-600 hover:text-blue-800">Terms of Service</a></li>
           </ul>
         </div>
       </div>
