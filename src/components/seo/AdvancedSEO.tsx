@@ -10,7 +10,7 @@ export const AdvancedSEO = component$(() => {
           {
             "@type": "RealEstateAgent",
             "@id": "https://heritagestonebridge.com/#agent",
-            name: "Dr. Jan Duffy",
+            name: "Heritage Stonebridge | Homes By Dr. Jan Duffy",
             email: "DrDuffySells@HeritageStonebridge.com",
             telephone: "702-789-6561",
             url: "https://heritagestonebridge.com",
@@ -71,7 +71,7 @@ export const AdvancedSEO = component$(() => {
                   "@type": "Organization",
                   name: "Nevada Real Estate Division",
                 },
-                identifier: "S.0197614",
+                identifier: "S.0197614.LLC",
               },
             ],
           },

@@ -87,7 +87,7 @@ export default component$(() => {
         "worksFor": {
           "@type": "RealEstateAgent",
           "@id": "https://heritagestonebridge.com/#organization",
-          "name": "Heritage at Stonebridge | Homes by Dr. Jan Duffy"
+          "name": "Heritage Stonebridge | Homes By Dr. Jan Duffy"
         },
         "hasOccupation": {
           "@type": "Occupation",
@@ -145,7 +145,7 @@ export default component$(() => {
               "@type": "Organization",
               "name": "Nevada Real Estate Division"
             },
-            "identifier": "S.0197614",
+            "identifier": "S.0197614.LLC",
             "description": "Licensed Nevada Real Estate Professional"
           }
         ],
@@ -242,7 +242,7 @@ export default component$(() => {
             "name": "What is Dr. Jan Duffy's license number?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Dr. Jan Duffy's Nevada Real Estate License number is S.0197614, issued by the Nevada Real Estate Division."
+              "text": "Dr. Jan Duffy's Nevada Real Estate License number is S.0197614.LLC, issued by the Nevada Real Estate Division."
             }
           }
         ]
@@ -358,7 +358,7 @@ export default component$(() => {
                 <h3 class="text-2xl font-bold text-gray-900 mb-4">Dr. Jan Duffy</h3>
                 <p class="text-lg text-gray-600 mb-4">Licensed Nevada Real Estate Professional</p>
                 <div class="space-y-2 text-sm text-gray-500">
-                  <p><strong>License:</strong> S.0197614</p>
+                  <p><strong>License:</strong> S.0197614.LLC</p>
                   <p><strong>Phone:</strong> (702) 789-6561</p>
                   <p><strong>Email:</strong> DrDuffySells@HeritageStonebridge.com</p>
                   <p><strong>Location:</strong> Las Vegas, Nevada</p>
@@ -531,7 +531,7 @@ export default component$(() => {
           </div>
           <div class="mt-8 text-center">
             <p class="text-blue-200 text-sm">
-              <strong>Nevada Real Estate License:</strong> S.0197614
+              <strong>Nevada Real Estate License:</strong> S.0197614.LLC
               <br />
               <strong>Office:</strong> Crossbridge Dr, Las Vegas, NV 89138
               <br />

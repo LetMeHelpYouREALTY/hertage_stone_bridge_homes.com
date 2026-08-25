@@ -14,14 +14,15 @@ export default component$(() => {
         "@context": "https://schema.org",
         "@type": "RealEstateAgent",
         "@id": "https://heritagestonebridge.com/#organization",
-        "name": "Heritage at Stonebridge | Homes by Dr. Jan Duffy",
+        "name": "Heritage Stonebridge | Homes By Dr. Jan Duffy",
         "alternateName": [
           "Heritage at Stonebridge", 
+          "Heritage Stonebridge",
+          "Homes By Dr. Jan Duffy",
           "Dr. Jan Duffy Real Estate", 
-          "Homes by Dr. Jan Duffy",
           "Stonebridge Real Estate"
         ],
-        "description": "Heritage at Stonebridge specializes in luxury homes and new construction in Las Vegas, Summerlin, Henderson, and Red Rock Canyon. Expert guidance from Dr. Jan Duffy with 500+ successful transactions.",
+        "description": "Your local guide to Heritage at Stonebridge — Lennar's guard-gated 55+ community in Summerlin West (89138). Dr. Jan Duffy, REALTOR® with Berkshire Hathaway HomeServices Nevada Properties (NV License S.0197614.LLC), helps buyers and sellers with resale and new-build homes, HOA questions, and fair comparisons to Sun City Summerlin and other Summerlin active-adult neighborhoods.",
         "url": "https://heritagestonebridge.com",
         "logo": {
           "@type": "ImageObject",
@@ -61,16 +62,40 @@ export default component$(() => {
             "@type": "OpeningHoursSpecification",
             "dayOfWeek": "Saturday",
             "opens": "10:00",
-            "closes": "16:00"
+            "closes": "16:30"
+          }
+        ],
+        "specialOpeningHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "validFrom": "2026-07-03",
+            "validThrough": "2026-07-03",
+            "opens": "00:00",
+            "closes": "00:00"
           },
           {
             "@type": "OpeningHoursSpecification",
-            "dayOfWeek": "Sunday",
-            "opens": "By Appointment",
-            "closes": "By Appointment"
+            "validFrom": "2026-07-04",
+            "validThrough": "2026-07-04",
+            "opens": "00:00",
+            "closes": "00:00"
           }
         ],
         "areaServed": [
+          {
+            "@type": "PostalCode",
+            "name": "89138",
+            "addressLocality": "Las Vegas",
+            "addressRegion": "NV"
+          },
+          {
+            "@type": "Place",
+            "name": "Summerlin West",
+            "containedInPlace": {
+              "@type": "City",
+              "name": "Las Vegas"
+            }
+          },
           {
             "@type": "City",
             "name": "Las Vegas",
@@ -80,24 +105,8 @@ export default component$(() => {
             }
           },
           {
-            "@type": "City", 
-            "name": "Henderson",
-            "containedInPlace": {
-              "@type": "State",
-              "name": "Nevada"
-            }
-          },
-          {
             "@type": "City",
             "name": "Summerlin", 
-            "containedInPlace": {
-              "@type": "State",
-              "name": "Nevada"
-            }
-          },
-          {
-            "@type": "Place",
-            "name": "Red Rock Canyon",
             "containedInPlace": {
               "@type": "State",
               "name": "Nevada"
@@ -133,7 +142,7 @@ export default component$(() => {
             "@type": "Organization",
             "name": "Nevada Real Estate Division"
           },
-          "identifier": "S.0197614"
+          "identifier": "S.0197614.LLC"
         },
         "sameAs": [
           "https://www.facebook.com/DrJanDuffyRealEstate",
@@ -219,7 +228,7 @@ export default component$(() => {
               "@type": "Organization",
               "name": "Nevada Real Estate Division"
             },
-            "identifier": "S.0197614"
+            "identifier": "S.0197614.LLC"
           }
         ],
         "address": {

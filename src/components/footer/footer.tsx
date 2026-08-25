@@ -1,4 +1,5 @@
 import { component$ } from "@builder.io/qwik";
+import { business } from "~/config/business";
 
 export const Footer = component$(() => {
   return (
@@ -7,31 +8,37 @@ export const Footer = component$(() => {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Company Info */}
           <div>
-            <h3 class="text-xl font-bold mb-4">Dr. Jan Duffy</h3>
+            <h3 class="text-xl font-bold mb-4">{business.name}</h3>
             <p class="text-gray-300 mb-4">
-              Las Vegas Real Estate Expert specializing in 55+ communities and luxury homes near Red
-              Rock Canyon.
+              Your local guide to Heritage at Stonebridge — Lennar's guard-gated 55+ community in
+              Summerlin West (89138).
             </p>
             <div class="space-y-2">
               <p class="flex items-center">
                 <span class="mr-2">📞</span>
-                <a href="tel:702-789-6561" class="hover:text-blue-400">
-                  (702) 789-6561
+                <a href={business.telephoneHref} class="hover:text-blue-400">
+                  {business.telephoneDisplay}
+                </a>
+              </p>
+              <p class="flex items-center">
+                <span class="mr-2">💬</span>
+                <a href={business.smsHref} class="hover:text-blue-400">
+                  Text {business.telephoneDisplay}
                 </a>
               </p>
               <p class="flex items-center">
                 <span class="mr-2">✉️</span>
-                <a href="mailto:DrDuffySells@HeritageStonebridge.com" class="hover:text-blue-400">
-                  DrDuffySells@HeritageStonebridge.com
+                <a href={`mailto:${business.email}`} class="hover:text-blue-400">
+                  {business.email}
                 </a>
               </p>
               <p class="flex items-center">
                 <span class="mr-2">📍</span>
-                Crossbridge Dr, Las Vegas, NV 89138
+                {business.addressDisplay}
               </p>
-              <p class="flex items-center">
+              <p class="flex items-start">
                 <span class="mr-2">🕒</span>
-                Mon-Fri: 9AM-6PM | Sat: 10AM-4PM | Sun: By Appointment
+                <span>{business.hoursDisplay}</span>
               </p>
             </div>
           </div>
@@ -367,8 +374,12 @@ export const Footer = component$(() => {
         <div class="border-t border-gray-700 mt-8 pt-8">
           <div class="flex flex-col md:flex-row justify-between items-center">
             <div class="text-gray-400 text-sm mb-4 md:mb-0">
-              <p>&copy; 2025 Dr. Jan Duffy, Nevada Real Estate License #S.0197614</p>
-              <p>Licensed Real Estate Professional serving Las Vegas & Summerlin</p>
+              <p>
+                &copy; 2026 {business.name}, Nevada Real Estate License #{business.license}
+              </p>
+              <p>
+                {business.broker} · Serving Las Vegas, NV 89138 and Summerlin West
+              </p>
             </div>
             <div class="flex space-x-6 text-sm">
               <a href="/privacy-policy" class="text-gray-400 hover:text-blue-400">

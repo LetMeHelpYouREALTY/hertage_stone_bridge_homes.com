@@ -1,13 +1,18 @@
 import { component$, useTask$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { RealScoutStickyWidget } from "~/components/real-estate/RealScoutStickyWidget";
+import {
+  business,
+  openingHoursSpecification,
+  specialOpeningHoursSpecification,
+} from "~/config/business";
 
 export const head: DocumentHead = {
   title: "Contact Dr. Jan Duffy - Las Vegas Real Estate Expert | Heritage at Stonebridge",
   meta: [
     {
       name: "description",
-      content: "Contact Dr. Jan Duffy for expert Las Vegas real estate services. Call (702) 789-6561 or email DrDuffySells@HeritageStonebridge.com. Located at Crossbridge Dr, Las Vegas, NV 89138.",
+      content: `Contact ${business.name} for Heritage at Stonebridge real estate. Call ${business.telephoneDisplay} or text ${business.telephoneDisplay}. Located at ${business.addressDisplay}.`,
     },
     {
       property: "og:title",
@@ -69,8 +74,8 @@ export default component$(() => {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         "@id": "https://heritagestonebridge.com/#localbusiness",
-        "name": "Heritage at Stonebridge | Homes by Dr. Jan Duffy",
-        "description": "Premier Heritage at Stonebridge real estate services in Las Vegas. Expert knowledge of Las Vegas market trends, pricing, and neighborhood insights with 500+ successful transactions.",
+        "name": "Heritage Stonebridge | Homes By Dr. Jan Duffy",
+        "description": "Your local guide to Heritage at Stonebridge — Lennar's guard-gated 55+ community in Summerlin West (89138). Dr. Jan Duffy, REALTOR® with Berkshire Hathaway HomeServices Nevada Properties (NV License S.0197614.LLC), helps buyers and sellers with resale and new-build homes, HOA questions, and fair comparisons to Sun City Summerlin and other Summerlin active-adult neighborhoods.",
         "image": {
           "@type": "ImageObject",
           "url": "https://heritagestonebridge.com/images/dr-jan-duffy-professional.jpg",
@@ -93,26 +98,8 @@ export default component$(() => {
           "latitude": "36.1716",
           "longitude": "-115.3384"
         },
-        "openingHoursSpecification": [
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            "opens": "09:00",
-            "closes": "18:00"
-          },
-          {
-            "@type": "OpeningHoursSpecification", 
-            "dayOfWeek": "Saturday",
-            "opens": "10:00",
-            "closes": "16:00"
-          },
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": "Sunday", 
-            "opens": "By Appointment",
-            "closes": "By Appointment"
-          }
-        ],
+        "openingHoursSpecification": openingHoursSpecification,
+        "specialOpeningHoursSpecification": specialOpeningHoursSpecification,
         "priceRange": "$$",
         "serviceArea": {
           "@type": "GeoCircle",
@@ -199,7 +186,7 @@ export default component$(() => {
             "@type": "Organization",
             "name": "Nevada Real Estate Division"
           },
-          "identifier": "S.0197614"
+            "identifier": "S.0197614.LLC"
         }
       });
 
@@ -246,7 +233,7 @@ export default component$(() => {
             "name": "What are Dr. Jan Duffy's business hours?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Dr. Jan Duffy's business hours are Monday-Friday 9:00 AM - 6:00 PM, Saturday 10:00 AM - 4:00 PM, and Sunday by appointment."
+              "text": "Dr. Jan Duffy's business hours are Monday–Friday 9:00 AM–6:00 PM, Saturday 10:00 AM–4:30 PM, and Sunday closed. Independence Day observed (July 3, 2026) and Independence Day (July 4, 2026) are closed."
             }
           },
           {
@@ -327,13 +314,13 @@ export default component$(() => {
               <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span class="text-2xl">📞</span>
               </div>
-              <h3 class="text-xl font-semibold text-gray-900 mb-2">Call Now</h3>
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">Call</h3>
               <p class="text-gray-600 mb-4">Speak directly with Dr. Jan Duffy</p>
               <a
-                href="tel:702-789-6561"
+                href={business.telephoneHref}
                 class="text-blue-600 hover:text-blue-800 font-semibold text-lg"
               >
-                (702) 789-6561
+                {business.telephoneDisplay}
               </a>
             </div>
 
@@ -345,10 +332,10 @@ export default component$(() => {
               <h3 class="text-xl font-semibold text-gray-900 mb-2">Email</h3>
               <p class="text-gray-600 mb-4">Send a detailed message</p>
               <a
-                href="mailto:DrDuffySells@HeritageStonebridge.com"
+                href={`mailto:${business.email}`}
                 class="text-green-600 hover:text-green-800 font-semibold text-sm break-all"
               >
-                DrDuffySells@HeritageStonebridge.com
+                {business.email}
               </a>
             </div>
 
@@ -373,12 +360,56 @@ export default component$(() => {
               <h3 class="text-xl font-semibold text-gray-900 mb-2">Hours</h3>
               <p class="text-gray-600 mb-4">Business hours</p>
               <div class="text-orange-600 font-semibold text-sm">
-                <p>Mon-Fri: 9AM-6PM</p>
-                <p>Sat: 10AM-4PM</p>
-                <p>Sun: By Appointment</p>
+                <p>Mon-Fri: 9:00 AM–6:00 PM</p>
+                <p>Sat: 10:00 AM–4:30 PM</p>
+                <p>Sun: Closed</p>
               </div>
             </div>
           </div>
+
+          <div class="mt-10 flex flex-col sm:flex-row flex-wrap gap-4 justify-center">
+            <a
+              href={business.telephoneHref}
+              class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 text-center"
+            >
+              Call {business.telephoneDisplay}
+            </a>
+            <a
+              href={business.smsHref}
+              class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 text-center"
+            >
+              Text {business.telephoneDisplay}
+            </a>
+            <a
+              href={business.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 text-center"
+            >
+              Directions
+            </a>
+            <a
+              href={business.reviewsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 text-center"
+            >
+              View Google Reviews
+            </a>
+          </div>
+
+          <div class="mt-10 rounded-lg overflow-hidden shadow-lg">
+            <iframe
+              title="Map of Heritage Stonebridge office at Crossbridge Dr, Las Vegas, NV 89138"
+              src={business.mapsEmbedUrl}
+              class="w-full h-[360px] border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+          <p class="mt-3 text-center text-sm text-gray-500">
+            Wheelchair accessible parking lot and wheelchair accessible entrance.
+          </p>
         </div>
       </section>
 
@@ -397,6 +428,14 @@ export default component$(() => {
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">Las Vegas, NV 89138</h3>
+              <p class="text-gray-600">Primary service area matching Google Business Profile</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">Summerlin West</h3>
+              <p class="text-gray-600">Heritage at Stonebridge and surrounding 55+ neighborhoods</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg text-center">
               <h3 class="text-xl font-semibold text-gray-900 mb-2">Las Vegas</h3>
               <p class="text-gray-600">Complete metropolitan area coverage</p>
             </div>
@@ -410,15 +449,7 @@ export default component$(() => {
             </div>
             <div class="bg-white p-6 rounded-lg shadow-lg text-center">
               <h3 class="text-xl font-semibold text-gray-900 mb-2">Red Rock Canyon</h3>
-              <p class="text-gray-600">Properties with stunning mountain views</p>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-              <h3 class="text-xl font-semibold text-gray-900 mb-2">Northwest Las Vegas</h3>
-              <p class="text-gray-600">Growing communities and luxury homes</p>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-              <h3 class="text-xl font-semibold text-gray-900 mb-2">Boulder City</h3>
-              <p class="text-gray-600">Historic charm and scenic beauty</p>
+              <p class="text-gray-600">Properties with mountain views</p>
             </div>
           </div>
         </div>
@@ -495,11 +526,11 @@ export default component$(() => {
           </div>
           <div class="mt-8 text-center">
             <p class="text-blue-200 text-sm">
-              <strong>Nevada Real Estate License:</strong> S.0197614
+              <strong>Nevada Real Estate License:</strong> S.0197614.LLC
               <br />
               <strong>Office:</strong> Crossbridge Dr, Las Vegas, NV 89138
               <br />
-              <strong>Hours:</strong> Mon-Fri 9AM-6PM | Sat 10AM-4PM | Sun By Appointment
+              <strong>Hours:</strong> Mon-Fri 9:00 AM–6:00 PM | Sat 10:00 AM–4:30 PM | Sun Closed
             </p>
           </div>
         </div>

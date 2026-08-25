@@ -106,13 +106,7 @@ export default component$(() => {
             "@type": "OpeningHoursSpecification", 
             "dayOfWeek": "Saturday",
             "opens": "10:00",
-            "closes": "16:00"
-          },
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": "Sunday", 
-            "opens": "By Appointment",
-            "closes": "By Appointment"
+            "closes": "16:30"
           }
         ],
         "priceRange": "$$",
@@ -201,7 +195,7 @@ export default component$(() => {
             "@type": "Organization",
             "name": "Nevada Real Estate Division"
           },
-          "identifier": "S.0197614"
+          "identifier": "S.0197614.LLC"
         }
       });
 

@@ -157,7 +157,7 @@ export default component$(() => {
           "Luxury Home Sales",
           "Gated Community Properties",
         ],
-        openingHours: "Mo-Su 08:00-20:00",
+        openingHours: "Mo-Fr 09:00-18:00, Sa 10:00-16:30",
         sameAs: [
           "https://www.facebook.com/DrJanDuffyRealEstate",
           "https://www.linkedin.com/in/drjanduffy",
