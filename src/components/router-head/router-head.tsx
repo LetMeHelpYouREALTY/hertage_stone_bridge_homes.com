@@ -1,5 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import { useDocumentHead, useLocation } from "@builder.io/qwik-city";
+import { LocalBusinessJsonLd } from "~/components/seo/LocalBusinessJsonLd";
 
 /**
  * The RouterHead component is placed inside of the document `<head>` element.
@@ -51,6 +52,12 @@ export const RouterHead = component$(() => {
           <style key={s.key} {...otherProps} dangerouslySetInnerHTML={s.style} />
         );
       })}
+
+      {(head.scripts || []).map((s) => (
+        <script key={s.key} {...s.props} dangerouslySetInnerHTML={s.script} />
+      ))}
+
+      <LocalBusinessJsonLd />
     </>
   );
 });

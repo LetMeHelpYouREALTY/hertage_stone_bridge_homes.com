@@ -44,7 +44,7 @@ export const AICrawlerDetection = component$(() => {
         contact: "702-789-6561",
         agent: "Dr. Jan Duffy",
         email: "DrDuffySells@HeritageStonebridge.com",
-        license: "Nevada Real Estate License #S.0197614",
+        license: "Nevada Real Estate License #S.0197614.LLC",
         features: [
           "Gated community",
           "Resort-style amenities",

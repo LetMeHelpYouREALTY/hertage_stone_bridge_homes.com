@@ -2,6 +2,7 @@ import { component$, useTask$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { RealScoutStickyWidget } from "~/components/real-estate/RealScoutStickyWidget";
 import { RealScoutOfficeListingsWidget } from "~/components/real-estate/RealScoutOfficeListingsWidget";
+import { GBP } from "~/config/gbp";
 
 export const head: DocumentHead = {
   title: "Las Vegas Real Estate | Dr. Jan Duffy - 55+ Communities Specialist",
@@ -72,8 +73,8 @@ export default component$(() => {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         "@id": "https://heritagestonebridge.com/las-vegas-real-estate#localbusiness",
-        "name": "Heritage at Stonebridge - Las Vegas Real Estate",
-        "description": "Premier Heritage at Stonebridge real estate services in Las Vegas. Expert knowledge of Las Vegas market trends, pricing, and neighborhood insights with comprehensive coverage of all Las Vegas areas.",
+        "name": GBP.name,
+        "description": GBP.description,
         "image": {
           "@type": "ImageObject",
           "url": "https://heritagestonebridge.com/images/las-vegas-real-estate.jpg",
@@ -92,8 +93,8 @@ export default component$(() => {
         },
         "geo": {
           "@type": "GeoCoordinates", 
-          "latitude": "36.1699",
-          "longitude": "-115.1398"
+          "latitude": GBP.latitude,
+          "longitude": GBP.longitude
         },
         "openingHoursSpecification": [
           {
@@ -106,13 +107,7 @@ export default component$(() => {
             "@type": "OpeningHoursSpecification", 
             "dayOfWeek": "Saturday",
             "opens": "10:00",
-            "closes": "16:00"
-          },
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": "Sunday", 
-            "opens": "By Appointment",
-            "closes": "By Appointment"
+            "closes": "16:30"
           }
         ],
         "priceRange": "$$",
@@ -120,8 +115,8 @@ export default component$(() => {
           "@type": "GeoCircle",
           "geoMidpoint": {
             "@type": "GeoCoordinates",
-            "latitude": "36.1699",
-            "longitude": "-115.1398"
+            "latitude": GBP.latitude,
+            "longitude": GBP.longitude
           },
           "geoRadius": "50000"
         },
@@ -201,7 +196,7 @@ export default component$(() => {
             "@type": "Organization",
             "name": "Nevada Real Estate Division"
           },
-          "identifier": "S.0197614"
+          "identifier": GBP.license
         }
       });
 

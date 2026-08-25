@@ -84,8 +84,8 @@ export default component$(() => {
         },
         "geo": {
           "@type": "GeoCoordinates",
-          "latitude": "36.1699",
-          "longitude": "-115.1398"
+          "latitude": "36.1647738",
+          "longitude": "-115.3710848"
         },
         "amenityFeature": [
           {
@@ -150,7 +150,7 @@ export default component$(() => {
             "@type": "Organization",
             "name": "Nevada Real Estate Division"
           },
-          "identifier": "S.0197614"
+          "identifier": "S.0197614.LLC"
         }
       });
 

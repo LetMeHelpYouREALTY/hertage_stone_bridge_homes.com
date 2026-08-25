@@ -1,4 +1,5 @@
 import { component$, useVisibleTask$ } from "@builder.io/qwik";
+import { GBP } from "~/config/gbp";
 
 export const AdvancedSEO = component$(() => {
   useVisibleTask$(() => {
@@ -10,9 +11,9 @@ export const AdvancedSEO = component$(() => {
           {
             "@type": "RealEstateAgent",
             "@id": "https://heritagestonebridge.com/#agent",
-            name: "Dr. Jan Duffy",
+            name: GBP.name,
             email: "DrDuffySells@HeritageStonebridge.com",
-            telephone: "702-789-6561",
+            telephone: GBP.telephoneDisplay,
             url: "https://heritagestonebridge.com",
             image: "https://heritagestonebridge.com/images/dr-jan-duffy.jpg",
             address: {
@@ -25,8 +26,8 @@ export const AdvancedSEO = component$(() => {
             },
             geo: {
               "@type": "GeoCoordinates",
-              latitude: 36.1699,
-              longitude: -115.1398,
+              latitude: GBP.latitude,
+              longitude: GBP.longitude,
             },
             areaServed: [
               {
@@ -71,7 +72,7 @@ export const AdvancedSEO = component$(() => {
                   "@type": "Organization",
                   name: "Nevada Real Estate Division",
                 },
-                identifier: "S.0197614",
+                identifier: GBP.license,
               },
             ],
           },
@@ -92,8 +93,8 @@ export const AdvancedSEO = component$(() => {
             },
             geo: {
               "@type": "GeoCoordinates",
-              latitude: 36.1699,
-              longitude: -115.1398,
+              latitude: GBP.latitude,
+              longitude: GBP.longitude,
             },
             amenityFeature: [
               {
@@ -152,7 +153,7 @@ export const AdvancedSEO = component$(() => {
         { name: "ai-community-type", content: "active-adult-gated-community" },
         { name: "ai-price-range", content: "$489,000 - $800,000+" },
         { name: "ai-agent", content: "Dr. Jan Duffy" },
-        { name: "ai-phone", content: "702-789-6561" },
+        { name: "ai-phone", content: GBP.telephoneDisplay },
         { name: "ai-email", content: "DrDuffySells@HeritageStonebridge.com" },
 
         // Advanced search engine directives
@@ -178,8 +179,8 @@ export const AdvancedSEO = component$(() => {
         // Advanced geo tags
         { name: "geo.region", content: "US-NV" },
         { name: "geo.placename", content: "Las Vegas" },
-        { name: "geo.position", content: "36.1699;-115.1398" },
-        { name: "ICBM", content: "36.1699, -115.1398" },
+        { name: "geo.position", content: GBP.geoPosition },
+        { name: "ICBM", content: `${GBP.latitude}, ${GBP.longitude}` },
 
         // Advanced language and locale
         { name: "language", content: "en-US" },
@@ -229,8 +230,8 @@ export const AdvancedSEO = component$(() => {
           name: "Las Vegas, Nevada",
           geo: {
             "@type": "GeoCoordinates",
-            latitude: 36.1699,
-            longitude: -115.1398,
+            latitude: GBP.latitude,
+            longitude: GBP.longitude,
           },
         },
         temporalCoverage: "2025-01-01/2025-12-31",

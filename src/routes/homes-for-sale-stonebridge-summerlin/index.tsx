@@ -127,6 +127,7 @@ export default component$(() => {
         email: "DrDuffySells@HeritageStonebridge.com",
         address: {
           "@type": "PostalAddress",
+          streetAddress: "Crossbridge Dr",
           addressLocality: "Las Vegas",
           addressRegion: "NV",
           postalCode: "89138",
@@ -134,8 +135,8 @@ export default component$(() => {
         },
         geo: {
           "@type": "GeoCoordinates",
-          latitude: "36.1699",
-          longitude: "-115.1398",
+          latitude: "36.1647738",
+          longitude: "-115.3710848",
         },
         areaServed: [
           {
@@ -157,7 +158,7 @@ export default component$(() => {
           "Luxury Home Sales",
           "Gated Community Properties",
         ],
-        openingHours: "Mo-Su 08:00-20:00",
+        openingHours: "Mo-Fr 09:00-18:00, Sa 10:00-16:30",
         sameAs: [
           "https://www.facebook.com/DrJanDuffyRealEstate",
           "https://www.linkedin.com/in/drjanduffy",
@@ -571,7 +572,7 @@ export default component$(() => {
               <br />
               <strong>Neighborhood:</strong> Summerlin West, Stonebridge Community
               <br />
-              <strong>License:</strong> Nevada Real Estate License #S.0197614
+              <strong>License:</strong> Nevada Real Estate License #S.0197614.LLC
             </p>
           </div>
         </div>

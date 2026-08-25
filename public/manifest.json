@@ -1,7 +1,7 @@
 {
-  "name": "Heritage at Stonebridge - 55+ Active Adult Community",
+  "name": "Heritage Stonebridge | Homes By Dr. Jan Duffy",
   "short_name": "Heritage Stonebridge",
-  "description": "Luxury 55+ active adult community in Summerlin, Las Vegas. Discover your dream home with Dr. Jan Duffy, Nevada Real Estate License #S.0197614.",
+  "description": "Your local guide to Heritage at Stonebridge — Lennar's guard-gated 55+ community in Summerlin West (89138). Dr. Jan Duffy, REALTOR® with Berkshire Hathaway HomeServices Nevada Properties (NV License S.0197614.LLC).",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -118,7 +118,7 @@
   "related_applications": [
     {
       "platform": "web",
-      "url": "https://heritagestonebridge.com"
+      "url": "https://www.heritagestonebridge.com"
     }
   ],
   "prefer_related_applications": false,

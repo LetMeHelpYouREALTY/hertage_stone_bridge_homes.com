@@ -2,6 +2,11 @@ import { component$, useTask$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { RealScoutStickyWidget } from "~/components/real-estate/RealScoutStickyWidget";
 import { RealScoutHeroWidget } from "~/components/real-estate/RealScoutHeroWidget";
+import { GBP } from "~/config/gbp";
+import {
+  getOpeningHoursSpecification,
+  getSpecialOpeningHoursSpecification,
+} from "~/lib/local-business-schema";
 
 export default component$(() => {
   // Inject JSON-LD structured data
@@ -14,15 +19,15 @@ export default component$(() => {
         "@context": "https://schema.org",
         "@type": "RealEstateAgent",
         "@id": "https://heritagestonebridge.com/#organization",
-        "name": "Heritage at Stonebridge | Homes by Dr. Jan Duffy",
+        "name": GBP.name,
         "alternateName": [
           "Heritage at Stonebridge", 
           "Dr. Jan Duffy Real Estate", 
-          "Homes by Dr. Jan Duffy",
+          "Homes By Dr. Jan Duffy",
           "Stonebridge Real Estate"
         ],
-        "description": "Heritage at Stonebridge specializes in luxury homes and new construction in Las Vegas, Summerlin, Henderson, and Red Rock Canyon. Expert guidance from Dr. Jan Duffy with 500+ successful transactions.",
-        "url": "https://heritagestonebridge.com",
+        "description": GBP.description,
+        "url": GBP.url,
         "logo": {
           "@type": "ImageObject",
           "url": "https://heritagestonebridge.com/images/heritage-stonebridge-logo.jpg",
@@ -47,61 +52,20 @@ export default component$(() => {
         },
         "geo": {
           "@type": "GeoCoordinates",
-          "latitude": "36.1716",
-          "longitude": "-115.3384"
+          "latitude": GBP.latitude,
+          "longitude": GBP.longitude
         },
-        "openingHoursSpecification": [
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            "opens": "09:00",
-            "closes": "18:00"
-          },
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": "Saturday",
-            "opens": "10:00",
-            "closes": "16:00"
-          },
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": "Sunday",
-            "opens": "By Appointment",
-            "closes": "By Appointment"
-          }
-        ],
+        "hasMap": GBP.mapsUri,
+        "openingHoursSpecification": getOpeningHoursSpecification(),
+        "specialOpeningHoursSpecification": getSpecialOpeningHoursSpecification(),
         "areaServed": [
           {
-            "@type": "City",
-            "name": "Las Vegas",
-            "containedInPlace": {
-              "@type": "State",
-              "name": "Nevada"
-            }
-          },
-          {
-            "@type": "City", 
-            "name": "Henderson",
-            "containedInPlace": {
-              "@type": "State",
-              "name": "Nevada"
-            }
-          },
-          {
-            "@type": "City",
-            "name": "Summerlin", 
-            "containedInPlace": {
-              "@type": "State",
-              "name": "Nevada"
-            }
+            "@type": "Place",
+            "name": "Las Vegas, NV 89138"
           },
           {
             "@type": "Place",
-            "name": "Red Rock Canyon",
-            "containedInPlace": {
-              "@type": "State",
-              "name": "Nevada"
-            }
+            "name": "Summerlin West, Las Vegas, NV"
           }
         ],
         "serviceType": [
@@ -133,7 +97,7 @@ export default component$(() => {
             "@type": "Organization",
             "name": "Nevada Real Estate Division"
           },
-          "identifier": "S.0197614"
+          "identifier": GBP.license
         },
         "sameAs": [
           "https://www.facebook.com/DrJanDuffyRealEstate",
@@ -219,7 +183,7 @@ export default component$(() => {
               "@type": "Organization",
               "name": "Nevada Real Estate Division"
             },
-            "identifier": "S.0197614"
+            "identifier": GBP.license
           }
         ],
         "address": {
@@ -311,8 +275,8 @@ export default component$(() => {
         },
         "geo": {
           "@type": "GeoCoordinates",
-          "latitude": "36.1699",
-          "longitude": "-115.1398"
+          "latitude": GBP.latitude,
+          "longitude": GBP.longitude
         },
         "amenityFeature": [
           {
@@ -582,7 +546,7 @@ export const head: DocumentHead = {
     },
     {
       property: "og:site_name",
-      content: "Heritage at Stonebridge",
+      content: "Heritage Stonebridge | Homes By Dr. Jan Duffy",
     },
     {
       property: "og:locale",
@@ -599,7 +563,7 @@ export const head: DocumentHead = {
     },
     {
       name: "geo.position",
-      content: "36.1699;-115.1398",
+      content: GBP.geoPosition,
     },
     {
       name: "twitter:card",
